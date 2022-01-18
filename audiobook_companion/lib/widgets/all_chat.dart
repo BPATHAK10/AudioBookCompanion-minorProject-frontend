@@ -1,3 +1,5 @@
+import 'package:audiobook_companion/screens/text_page.dart';
+
 import '../models/message_model.dart';
 import '../screens/screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,10 +29,12 @@ class AllChats extends StatelessWidget {
             itemCount: allChats.length,
             itemBuilder: (context, int index) {
               final allChat = allChats[index];
+              final chatText = allChat.text_title.name;
               return ListTile(
-                title: Text(allChat.text_title.name),
+                title: Text(chatText),
                 onTap: (){
-                  print('tapped');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => displayText(chatText:chatText)));
+                  // print('tapped');
                 },
               );
               // Container(

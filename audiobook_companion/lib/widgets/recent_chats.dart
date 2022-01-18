@@ -1,3 +1,4 @@
+import 'package:audiobook_companion/screens/text_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/message_model.dart';
@@ -39,7 +40,13 @@ class RecentChats extends StatelessWidget {
               return ListTile(
                 title: Text(recentChat.text_title.name),
                 onTap: (){
-                  print("tapped arko");
+                  // print("tapped arko");
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => displayText(chatText: recentChat.text_title.name,)
+                    ),
+                  );
                 },
               );
               // Container(
