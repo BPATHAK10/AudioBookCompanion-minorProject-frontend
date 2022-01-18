@@ -15,7 +15,7 @@ class AllChats extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'All recordings',
+                'Sample Text',
                 style: MyTheme.heading2,
               ),
             ],
@@ -27,42 +27,47 @@ class AllChats extends StatelessWidget {
             itemCount: allChats.length,
             itemBuilder: (context, int index) {
               final allChat = allChats[index];
-              return Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 28,
-                        backgroundImage: AssetImage(allChat.avatar),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                      
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              allChat.text_title.name,
-                              style: MyTheme.heading2.copyWith(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              allChat.text,
-                              style: MyTheme.bodyText1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
+              return ListTile(
+                title: Text(allChat.text_title.name),
+                onTap: (){
+                  print('tapped');
+                },
+              );
+              // Container(
+
         
-                    ],
-                  ));
+              //     margin: const EdgeInsets.only(top: 20),
+              //     child: Row(
+              //       children: [
+              //         SizedBox(
+              //           width: 20,
+              //         ),
+              //         GestureDetector(
+              //           onTap: () {
+              //             print('tapped');
+                      
+              //           },
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Text(
+              //                 allChat.text_title.name,
+              //                 style: MyTheme.heading2.copyWith(
+              //                   fontSize: 16,
+              //                 ),
+              //               ),
+              //               Text(
+              //                 allChat.text,
+              //                 style: MyTheme.bodyText1,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         Spacer(),
+        
+              //       ],
+              //     ));
             })
       ],
     );

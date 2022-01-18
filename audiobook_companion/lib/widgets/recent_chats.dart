@@ -19,7 +19,7 @@ class RecentChats extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Texts',
+                'Your Text',
                 style: MyTheme.heading2,
               ),
               Spacer(),
@@ -36,42 +36,48 @@ class RecentChats extends StatelessWidget {
             itemCount: recentChats.length,
             itemBuilder: (context, int index) {
               final recentChat = recentChats[index];
-              return Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 28,
-                        backgroundImage: AssetImage(recentChat.avatar),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          ;
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              recentChat.text_title.name,
-                              style: MyTheme.heading2.copyWith(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              recentChat.text,
-                              style: MyTheme.bodyText1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
+              return ListTile(
+                title: Text(recentChat.text_title.name),
+                onTap: (){
+                  print("tapped arko");
+                },
+              );
+              // Container(
+              //     margin: const EdgeInsets.only(top: 20),
+              //     child: Row(
+              //       children: [
+              //         CircleAvatar(
+              //           radius: 28,
+              //           backgroundImage: AssetImage(recentChat.avatar),
+              //         ),
+              //         SizedBox(
+              //           width: 20,
+              //         ),
+              //         GestureDetector(
+              //           onTap: () {
+              //             ;
+              //           },
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Text(
+              //                 recentChat.text_title.name,
+              //                 style: MyTheme.heading2.copyWith(
+              //                   fontSize: 16,
+              //                 ),
+              //               ),
+              //               Text(
+              //                 recentChat.text,
+              //                 style: MyTheme.bodyText1,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         Spacer(),
           
-                    ],
-                  ));
+              //       ],
+              //     ));
             })
       ],
     );
