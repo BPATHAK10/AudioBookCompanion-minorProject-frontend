@@ -7,6 +7,15 @@ class ParagraphText {
   ParagraphText(
     this.title, 
     this.content);
+
+  // duplicate add is possible (needs some work here)
+  void addToAll(){
+    allTexts.add(this);
+  }
+  void addToRecent(){
+    recentTexts.add(this);
+  }
+  
 }
 
 final List<ParagraphText> recentTexts = [

@@ -1,8 +1,12 @@
+import 'dart:io';
+import 'package:audiobook_companion/models/paragraph_text_model.dart';
 import 'package:audiobook_companion/screens/addText_page.dart';
+import 'package:audiobook_companion/screens/text_page.dart';
 import 'package:audiobook_companion/widgets/expandable_fab.dart';
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
+import 'package:file_picker/file_picker.dart';
 import '../screens/screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -63,14 +67,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: const Icon(Icons.text_fields_outlined),
           ),
           ActionButton(
-            onPressed: ()=> Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => addTextScreen()
-              ),
-            ),
-            // onPressed: () => _showAction(context, 1),
+            onPressed: () async{
+                FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  type: FileType.custom,
+                  allowedExtensions: ['txt'],
+                );
+          
+                if (result != null) {
+                  File file = File(result.files.single.path.toString());
+                  final fileName = result.files.first.name.split('.')[0];
+                
+                  print(fileName);
+                  final fileContents = file.readAsStringSync();
+
+                  final paragraphText = ParagraphText(fileName, fileContents.toString());
+                  paragraphText.addToAll();
+                  print(fileContents.toString());
+
+                  Navigator.push(context, 
+                  MaterialPageRoute(builder: (context)=> displayText(paragraphText: paragraphText))); 
+
+                } else {
+                    // User canceled the picker
+                    return;
+                }
+            },
             icon: const Icon(Icons.upload_file),
-          ),
+
+            ),
+            // onPressed: ()=> Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => addTextScreen()
+            //   ),
+            // ),
+            // onPressed: () => _showAction(context, 1),
         ],
       ),
 
