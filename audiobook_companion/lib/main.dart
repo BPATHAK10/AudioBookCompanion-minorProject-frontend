@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Chattie UI',
+      title: 'AudioBook Companion',
       theme: ThemeData(
         primaryColor: MyTheme.kPrimaryColor,
         accentColor: MyTheme.kAccentColor,

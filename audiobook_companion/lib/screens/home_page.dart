@@ -1,5 +1,5 @@
 import 'package:audiobook_companion/screens/addText_page.dart';
-
+import 'package:audiobook_companion/widgets/expandable_fab.dart';
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
@@ -11,11 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  
   @override
-
   void initState() {
     super.initState();
   }
+  
+  static const _actionTitles = ['Add Text', 'Import'];
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +45,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   )),
-              child: ChatPage()
+              child: MainPage() 
            ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => addTextScreen()),
-          );
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Icon(Icons.add),
-        ),
+      floatingActionButton: ExpandableFab(
+        distance: 80.0,
+        children: [
+          ActionButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => addTextScreen()
+              ),
+            ),
+            // onPressed: () => _showAction(context, 0),
+            icon: const Icon(Icons.text_fields_outlined),
+          ),
+          ActionButton(
+            onPressed: ()=> Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => addTextScreen()
+              ),
+            ),
+            // onPressed: () => _showAction(context, 1),
+            icon: const Icon(Icons.upload_file),
+          ),
+        ],
+      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => addTextScreen()),
+      //     );
+      //   },
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(15),
+      //   ),
+      //   child: Icon(Icons.add),
+      //   ),
       );
   }
 }

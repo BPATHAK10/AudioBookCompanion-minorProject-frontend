@@ -1,2 +1,2 @@
-export './recent_chats.dart';
-export './all_chat.dart';
+export 'recent_text.dart';
+export 'all_text.dart';

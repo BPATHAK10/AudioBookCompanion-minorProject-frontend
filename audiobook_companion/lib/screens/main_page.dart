@@ -1,8 +1,8 @@
 import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({
+class MainPage extends StatelessWidget {
+  const MainPage({
     Key ?key,
   }) : super(key: key);
 
@@ -11,8 +11,11 @@ class ChatPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          RecentChats(),
-          AllChats(),
+         RecentTexts(), 
+          SizedBox(
+            height: 20,
+          ),
+          AllTexts(),
         ],
       ),
     );

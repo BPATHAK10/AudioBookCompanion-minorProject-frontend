@@ -1,75 +1,88 @@
 import 'package:audiobook_companion/screens/text_page.dart';
-
-import '../models/message_model.dart';
-import '../screens/screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import '../models/paragraph_text_model.dart';
+import '../screens/screen.dart';
 
 import '../app_theme.dart';
 
-class AllChats extends StatelessWidget {
+class RecentTexts extends StatelessWidget {
+  const RecentTexts({
+    Key ?key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(top: 30),
           child: Row(
             children: [
               Text(
-                'Sample Text',
+                'Your Text',
                 style: MyTheme.heading2,
               ),
+              Spacer(),
+              Icon(
+                Icons.search,
+                color: MyTheme.kPrimaryColor,
+              )
             ],
           ),
         ),
         ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
-            itemCount: allChats.length,
+            itemCount: recentTexts.length,
             itemBuilder: (context, int index) {
-              final allChat = allChats[index];
-              final chatText = allChat.text_title.name;
+              final recentText = recentTexts[index];
               return ListTile(
-                title: Text(chatText),
+                title: Text(recentText.title),
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => displayText(chatText:chatText)));
-                  // print('tapped');
+                  // print("tapped arko");
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => displayText(paragraphText: recentText,)
+                    ),
+                  );
                 },
               );
               // Container(
-
-        
               //     margin: const EdgeInsets.only(top: 20),
               //     child: Row(
               //       children: [
+              //         CircleAvatar(
+              //           radius: 28,
+              //           backgroundImage: AssetImage(recentChat.avatar),
+              //         ),
               //         SizedBox(
               //           width: 20,
               //         ),
               //         GestureDetector(
               //           onTap: () {
-              //             print('tapped');
-                      
+              //             ;
               //           },
               //           child: Column(
               //             crossAxisAlignment: CrossAxisAlignment.start,
               //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //             children: [
               //               Text(
-              //                 allChat.text_title.name,
+              //                 recentChat.text_title.name,
               //                 style: MyTheme.heading2.copyWith(
               //                   fontSize: 16,
               //                 ),
               //               ),
               //               Text(
-              //                 allChat.text,
+              //                 recentChat.text,
               //                 style: MyTheme.bodyText1,
               //               ),
               //             ],
               //           ),
               //         ),
               //         Spacer(),
-        
+          
               //       ],
               //     ));
             })
