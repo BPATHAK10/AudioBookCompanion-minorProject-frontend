@@ -1,95 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class ParagraphText {
-  late final String title;
-  late final String content;
+part 'paragraph_text_model.g.dart';
 
-  ParagraphText(
-    this.title, 
-    this.content);
+@HiveType(typeId: 0)
+class ParagraphText extends HiveObject {
+  @HiveField(0)
+  String title = '';
+
+  @HiveField(1)
+  String content;
+
+  // late final List<ParagraphText> recentTexts;
+  // late final List<ParagraphText> allTexts;
+
+  ParagraphText({
+    required this.title,
+    required this.content,
+  });
+  // List<ParagraphText> getRecentTexts() {
+  //   return recentTexts;
+  // }
+
+  // List<ParagraphText> getAllTexts() {
+  //   return allTexts;
+  // }
 
   // duplicate add is possible (needs some work here)
-  void addToAll(){
+  void addToAll() {
     allTexts.add(this);
   }
-  void addToRecent(){
+
+  void addToRecent() {
     recentTexts.add(this);
   }
-  
 }
 
 final List<ParagraphText> recentTexts = [
-  ParagraphText(
-    'Banana',
-    'it is a fruit'
-  ),
-  ParagraphText(
-    'Lolipop',
-    'it is a candy'
-  ),
-  ParagraphText(
-    'laptop',
-    'it is everything'
-  ),
+  ParagraphText(title: 'Banana', content: 'it is a fruit'),
 ];
 
-final List<ParagraphText> allTexts= [
-  ParagraphText(
-    'Flutter',
-    'this app is made with flutter'
-  ),
-  ParagraphText(
-    'Communism',
-    'Communism (from Latin communis) is a philosophical, social, political, and economic ideology and movement whose goal is the establishment of a communist society, namely a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money,[3][4] and the state.[5][6] Communism is a specific, yet distinct, form of socialism. Communists agree on the withering away of the state but disagree on the means to this end, reflecting a distinction between a more libertarian approach of communization, revolutionary spontaneity, and workers self-management, and a more vanguardist or Communist party-driven approach through the development of a constitutional socialist state. Variants of communism have been developed throughout history, including anarcho-communism and Marxist schools of thought. Communism includes a variety of schools of thought which broadly include Marxism, Leninism, and libertarian communism as well as the political ideologies grouped around both, all of which share the analysis that the current order of society stems from capitalism, its economic system and mode of production, namely that in this system there are two major social classes, the relationship between these two classes is exploitative, and that this situation can only ultimately be resolved through a social revolution.[8][nb 1] The two classes are the proletariat (the working class), who make up the majority of the population within society and must work to survive, and the bourgeoisie (the capitalist class), a small minority who derives profit from employing the working class through private ownership of the means of production. According to this analysis, revolution would put the working class in power and in turn establish social ownership of the means of production which is the primary element in the transformation of society towards a communist mode of production.'
-  ),
-  ParagraphText(
-    'Tea',
-    'it is everything'
-  ),
+final List<ParagraphText> allTexts = [
+  ParagraphText(title: 'lappy', content: 'it is everything'),
 ];
-
-
-// class Message {
-//   final User text_title;
-//   final String avatar;
-//   final String text;
-
-//   Message({
-//     required this.text_title,
-//     required this.avatar,
-//     required this.text,
-//   });
-// }
-
-// final List<Message> recentChats = [
-//   Message(
-//     text_title: blackhole,
-//     avatar: 'assets/images/blackhole.jpg',
-//     text: "What a blackhole is?",
- 
-//   ),
-//   Message(
-//     text_title: ai,
-//     avatar: 'assets/images/ai.jpg',
-//     text: "Will ai take over the world ?",
-
-   
-//   ),
-// ];
-
-// final List<Message> allChats = [
-//   Message(
-//     text_title: elon,
-//     avatar: 'assets/images/elon.jpg',
-//     text: "Will elon take doge to the moon?",
-
-//   ),
-//   Message(
-//     text_title: pandas,
-//     avatar: 'assets/images/panda.jpg',
-//     text: "Where do panda live?",
-
-//   ),
-  
-// ];
-

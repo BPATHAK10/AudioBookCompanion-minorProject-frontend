@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-         RecentTexts(), 
+        //  RecentTexts(), 
           SizedBox(
             height: 20,
           ),

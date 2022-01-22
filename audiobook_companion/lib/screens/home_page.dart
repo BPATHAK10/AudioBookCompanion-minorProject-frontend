@@ -1,13 +1,15 @@
 import 'dart:io';
+import 'package:audiobook_companion/boxes/boxes.dart';
 import 'package:audiobook_companion/models/paragraph_text_model.dart';
-import 'package:audiobook_companion/screens/addText_page.dart';
 import 'package:audiobook_companion/screens/text_page.dart';
 import 'package:audiobook_companion/widgets/expandable_fab.dart';
+import 'package:hive/hive.dart';
 import '../app_theme.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import '../screens/screen.dart';
+import 'add_or_edit_text_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -60,7 +62,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ActionButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => addTextScreen()
+                builder: (_) => addOrEditTextScreen(isEdit: false)
               ),
             ),
             // onPressed: () => _showAction(context, 0),
@@ -77,12 +79,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   File file = File(result.files.single.path.toString());
                   final fileName = result.files.first.name.split('.')[0];
                 
-                  print(fileName);
+                  // print(fileName);
                   final fileContents = file.readAsStringSync();
 
-                  final paragraphText = ParagraphText(fileName, fileContents.toString());
-                  paragraphText.addToAll();
-                  print(fileContents.toString());
+                  final paragraphText = ParagraphText(title:fileName, content:fileContents.toString());
+                  
+                  // add to the hive box
+                  final box = Boxes.getTexts();
+                  box.add(paragraphText);
+                  // paragraphText.addToAll();
+                  // print(fileContents.toString());
 
                   Navigator.push(context, 
                   MaterialPageRoute(builder: (context)=> displayText(paragraphText: paragraphText))); 

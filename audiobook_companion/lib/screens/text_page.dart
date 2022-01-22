@@ -16,11 +16,17 @@ class _displayTextState extends State<displayText> {
       appBar: AppBar(
         title: Text(widget.paragraphText.title),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("play");
+        },
+        child: const Icon(Icons.play_circle_filled),
+      ),
       body: Column(
         children: [
           Text(
             widget.paragraphText.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               color: Colors.red,
               fontWeight: FontWeight.bold,
@@ -30,19 +36,23 @@ class _displayTextState extends State<displayText> {
               decorationStyle: TextDecorationStyle.dashed,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
-            widget.paragraphText.content,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.blue,
-              decorationStyle: TextDecorationStyle.dashed,
+          Expanded(
+            child: SingleChildScrollView(
+              child: Text(
+                widget.paragraphText.content,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.blue,
+                  decorationStyle: TextDecorationStyle.dashed,
+                ),
+              ),
             ),
           ),
         ],
