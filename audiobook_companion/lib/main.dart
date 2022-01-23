@@ -1,21 +1,22 @@
-import 'package:audiobook_companion/screens/homescreen.dart';
+import 'screens/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({ Key? key }) : super(key: key);
-
-  @override
+  @override 
   Widget build(BuildContext context) {
-     return MaterialApp(
-      title: "Audio Companion",
-      home: Home(),
+    return MaterialApp(
+      title: 'Audiobook Companion',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomeScreen(),
     );
-      
   }
 }
 
