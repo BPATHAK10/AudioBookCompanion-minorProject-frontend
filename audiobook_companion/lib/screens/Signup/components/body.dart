@@ -1,14 +1,15 @@
+import 'package:dummy/components/already_have_an_account_acheck.dart';
+import 'package:dummy/screens/Login/login_screen.dart';
 import 'package:dummy/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:dummy/Screens/Login/login_screen.dart';
-import 'package:dummy/Screens/Signup/components/background.dart';
-import 'package:dummy/Screens/Signup/components/or_divider.dart';
-import 'package:dummy/Screens/Signup/components/social_icon.dart';
-import 'package:dummy/components/already_have_an_account_acheck.dart';
 import 'package:dummy/components/rounded_button.dart';
 import 'package:dummy/components/rounded_input_field.dart';
 import 'package:dummy/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'background.dart';
+import 'or_divider.dart';
+import 'social_icon.dart';
 
 class Body extends StatelessWidget {
   @override

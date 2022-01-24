@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:dummy/Screens/Login/login_screen.dart';
-import 'package:dummy/Screens/Signup/signup_screen.dart';
-import 'package:dummy/Screens/Welcome/components/background.dart';
 import 'package:dummy/components/rounded_button.dart';
+import 'package:dummy/screens/Login/login_screen.dart';
+import 'package:dummy/screens/Signup/signup_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:dummy/constants.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'background.dart';
 
 class Body extends StatelessWidget {
   @override

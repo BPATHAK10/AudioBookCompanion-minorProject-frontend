@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dummy/Screens/Welcome/welcome_screen.dart';
 import 'package:dummy/constants.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+
+import 'screens/Welcome/welcome_screen.dart';
 
 void main() {
   runApp(MyApp());
