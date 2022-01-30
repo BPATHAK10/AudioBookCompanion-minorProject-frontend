@@ -30,7 +30,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding:const EdgeInsets.only(top: 60.0),
+            padding:const EdgeInsets.only(
+              left: 20.0,
+              right: 20.0,
+              top: 60.0),
             child: Center(
               child: Container(
                   width: 200,
@@ -38,12 +41,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Image.asset('assets/images/logo.png')),
             ),
           ),
+          const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              15.0,
+              250.0,
               20.0,
-              15.0,
-              0.0,
+              250.0,
+              20.0,
             ),
             child: TextField(
               onChanged: (value) {
@@ -59,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 15.0, right: 15.0, top: 15, bottom: 0),
+                left: 250.0, right: 250.0),
             child: TextField(
               onChanged: (value) {
                 password = value;
