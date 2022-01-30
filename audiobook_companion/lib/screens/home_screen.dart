@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     pinned: true,
                     snap: false,
                     centerTitle: false,
-                    title:const Text('Narrator'),
+                    title:const Text('Kathak'),
                     actions: [
                       IconButton(
                         icon: const Icon(Icons.account_box_outlined),
