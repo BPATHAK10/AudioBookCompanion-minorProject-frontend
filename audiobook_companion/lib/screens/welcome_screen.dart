@@ -16,7 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       seconds: 3,
       navigateAfterSeconds: LoginScreen(),
       title: const Text(
-        'Narrator',
+        'Kathak',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
       image: Image.asset(
