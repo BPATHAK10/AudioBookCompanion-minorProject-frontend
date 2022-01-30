@@ -61,6 +61,7 @@ class _ContentScreenState extends State<ContentScreen> {
   Widget build(BuildContext context) {
      return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
             actions: [              
               isEdit ? IconButton(
@@ -120,6 +121,7 @@ class _ContentScreenState extends State<ContentScreen> {
           child: Icon(_isListening ? Icons.mic : Icons.mic_none),
         ),
       ): ((_descriptionController.text==''))? FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.upload_file_outlined) ,
         onPressed: ()async {
           FilePickerResult? result = await FilePicker.platform.pickFiles(

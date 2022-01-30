@@ -1,5 +1,6 @@
 import 'package:kathak/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +13,15 @@ class MyApp extends StatelessWidget {
       title: 'Kathak',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        brightness: Brightness.light,
+
+        primaryColor: Colors.teal[200],
+        primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+
+        fontFamily:  GoogleFonts.roboto().fontFamily,
       ),
-      home: WelcomeScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }

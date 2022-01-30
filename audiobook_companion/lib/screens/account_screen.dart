@@ -5,9 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:kathak/utils/session_data.dart';
 
 class AccountScreen extends StatefulWidget {
-  
   final Session session;
-  const AccountScreen({ Key? key, required this.session}) : super(key: key);
+  const AccountScreen({Key? key, required this.session}) : super(key: key);
 
   @override
   _AccountScreenState createState() => _AccountScreenState();
@@ -18,46 +17,51 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Settings'),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text('Account Settings'),
       ),
-      body:SettingsList(
+      body: SettingsList(
         sections: [
           CustomSettingsSection(
-            
-            child: Column(
-              children: [
-                const SizedBox(height: 20,),
-                CircleAvatar(
-                  backgroundColor: const Color(0xffD3D3D3),
-                  child: Text(
-                    widget.session.userName[0],
-                    textAlign: TextAlign.left,
-                  ),
-                  radius: 50,
+              child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              CircleAvatar(
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  widget.session.userName[0],
+                  textAlign: TextAlign.left,
                 ),
-                const SizedBox(height: 15,),
-                Text(
-                  widget.session.userName,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                radius: 50,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                widget.session.userName,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
-              ],
-            )
-          ),
+              ),
+            ],
+          )),
           SettingsSection(
             title: const Text('Common'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: const Icon(Icons.font_download),
                 title: const Text('Font Size'),
-                value:const  Text('16'),
+                value: const Text('16'),
               ),
               SettingsTile.switchTile(
+
+                activeSwitchColor: Theme.of(context).primaryColor,
                 onToggle: (value) {},
                 initialValue: true,
                 leading: const Icon(Icons.format_paint),
-                title:const Text('Enable Dark Theme'),
+                title: const Text('Enable Dark Theme'),
               ),
             ],
           ),
@@ -80,17 +84,20 @@ class _AccountScreenState extends State<AccountScreen> {
                 value: Text('1'),
               ),
               SettingsTile.switchTile(
+                activeSwitchColor: Theme.of(context).primaryColor,
                 onToggle: (value) {},
                 initialValue: true,
-                leading: Icon(Icons.format_paint),
-                title: Text('Highlight Answered Data'),
+                leading: const Icon(Icons.format_paint),
+                title: const Text('Highlight Answered Data'),
               ),
             ],
           ),
           CustomSettingsSection(
             child: Column(
               children: [
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 Container(
                   height: 50,
                   width: 150,
@@ -100,24 +107,29 @@ class _AccountScreenState extends State<AccountScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ElevatedButton(
-                    
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                    ),
                     child: const Text(
                       "Log Out",
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.push(
-                        context,
-                        CupertinoPageRoute(builder: (context)=> LoginScreen(),)
-                      );
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ));
                     },
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           )

@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    String _selectedGender = 'male';
     final TextEditingController _searchController = TextEditingController();
     
     return Scaffold(
@@ -45,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 return CustomScrollView(
                   slivers: <Widget>[
                   SliverAppBar(
+                    backgroundColor: Theme.of(context).primaryColor,
                     floating: true,
                     pinned: true,
                     snap: false,
@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ],
                     bottom: AppBar(
+                      backgroundColor: Colors.white,
                       title: Container(
                         width: double.infinity,
                         height: 40,
@@ -83,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
   
                   SliverList(
+
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         final currentText = snapshot.data![index];
@@ -113,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
+                                        const SizedBox(height: 15,),
                                         Text(
                                           currentText.content,
                                           style: const TextStyle(
@@ -142,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           }
         ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed:(){
           Navigator.of(context).push(
             CupertinoPageRoute(
