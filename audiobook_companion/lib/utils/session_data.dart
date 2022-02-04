@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'constants.dart';
+import 'package:kathak/utils/constants.dart';
 
 class Data{
   late String title;
@@ -14,6 +14,7 @@ class Data{
   );
 }
 
+
 class Session{
 
   late int userId;
@@ -26,9 +27,9 @@ class Session{
   }
 
   Future<int> addData(String title, String content) async{
-
+    String url = baseUrl+'add_data';
     late int textid;
-    await http.post(addUrl, body: json.encode({
+    await http.post(Uri.parse(url), body: json.encode({
       'title':title,
       'content':content,
       'user_id':userId
@@ -47,7 +48,8 @@ class Session{
   void deleteItem(int index) async{
     final _textId = allTexts[index].textId;
     allTexts.removeAt(index);
-    await http.post(delUrl, body: json.encode({
+    String url = baseUrl+'delete_data';
+    await http.post(Uri.parse(url), body: json.encode({
       'user_id':userId,
       'text_id':_textId,
       })
@@ -60,7 +62,8 @@ class Session{
         allTexts.remove(allTexts[i]);
       }
     }
-    await http.post(delUrl, body: json.encode({
+    String url = baseUrl+'delete_data';
+    await http.post(Uri.parse(url), body: json.encode({
       'user_id':userId,
       'text_id':_textId,
       })
@@ -69,7 +72,8 @@ class Session{
 
   Future<List<Data>> getAllTexts() async {
     // final List<Data> newTexts = [];
-    await http.post(getUrl, body:json.encode({
+    String url = baseUrl+'get_data';
+    await http.post(Uri.parse(url), body:json.encode({
       'user_id': userId
     })).then((response){
       final decoded = json.decode(response.body) as Map<String,dynamic>;
@@ -89,7 +93,8 @@ class Session{
   }
 
   Future<bool> setUser(String username, String password) async{
-    await http.post(loginUrl, body: json.encode({
+    String url = baseUrl+'login';
+    await http.post(Uri.parse(url), body: json.encode({
       'username':username,
       'password':password
     })).then((response){
@@ -107,7 +112,8 @@ class Session{
   }
 
   Future <bool> addUser(String username, String password)async {
-    await http.post(registerUrl, body: json.encode({
+    String url = baseUrl+'register';
+    await http.post(Uri.parse(url), body: json.encode({
       'username':username,
       'password':password
     })).then((response){
