@@ -37,14 +37,14 @@ class _AccountScreenState extends State<AccountScreen> {
                 CircleAvatar(
                   backgroundColor: const Color(0xffD3D3D3),
                   child: Text(
-                    widget.session.userName[0],
+                    widget.session.fullName[0],
                     textAlign: TextAlign.left,
                   ),
                   radius: 50,
                 ),
                 const SizedBox(height: 15,),
                 Text(
-                  widget.session.userName,
+                  widget.session.fullName,
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -56,8 +56,10 @@ class _AccountScreenState extends State<AccountScreen> {
             title: const Text('Common'),
             tiles: <SettingsTile>[
               SettingsTile.switchTile(
-                onToggle: (value) {},
-                initialValue: true,
+                onToggle: (value) {
+                  
+                },
+                initialValue: false,
                 leading: const Icon(Icons.format_paint),
                 title:const Text('Enable Dark Theme'),
               ),

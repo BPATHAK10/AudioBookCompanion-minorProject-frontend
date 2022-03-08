@@ -1,5 +1,6 @@
 import 'package:kathak/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:kathak/utils/constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Kathak',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primaryColor: kPrimaryColor,
+        // primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: WelcomeScreen(),

@@ -4,6 +4,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:file_picker/file_picker.dart';
 import 'package:kathak/utils/session_data.dart';
 import 'package:kathak/utils/voice_handler.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class ContentScreen extends StatefulWidget {
 
@@ -19,7 +20,6 @@ class ContentScreen extends StatefulWidget {
 class _ContentScreenState extends State<ContentScreen> {
 
   bool isEdit = false;
-  bool isOpenBottom = false;
   late Data data;
 
   final TextEditingController _titleController = TextEditingController();
@@ -138,15 +138,18 @@ class _ContentScreenState extends State<ContentScreen> {
               ),
             ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: (!isEdit)? FloatingActionButton(
-        onPressed: (){
-          _listen();
-          setState(() {
-            isOpenBottom = true;
-          });
-        },
-        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: (!isEdit)? AvatarGlow(
+        animate: _isListening,
+        glowColor: Theme.of(context).primaryColor,
+        endRadius: 75.0,
+        duration: const Duration(milliseconds: 1000),
+        repeatPauseDuration: const Duration(milliseconds: 100),
+        repeat: true,
+        child: FloatingActionButton(
+          onPressed: _listen,
+          child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+        ),
       ):null,
 
       body: SingleChildScrollView(
