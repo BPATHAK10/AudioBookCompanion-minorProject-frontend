@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:file_picker/file_picker.dart';
@@ -20,24 +19,28 @@ class ContentScreen extends StatefulWidget {
 class _ContentScreenState extends State<ContentScreen> {
 
   bool isEdit = false;
+  bool isOpenBottom = false;
   late Data data;
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   late  VoiceHandler _voiceHandler;
+  // late PersistentBottomSheetController _controller;
 
-  // FlutterTts flutterTts = FlutterTts();
   late String contentOfFile;
   final stt.SpeechToText _speech= stt.SpeechToText();
   bool _isListening = false;
-  String _text = 'Press the button and start speaking';
+  String _text = 'start speaking';
+  String answer = '';
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>(); //key for context
 
   @override
   void initState() {
     super.initState();
     _voiceHandler = VoiceHandler(widget.session.userId);
     if (widget.indexData >= widget.session.allTexts.length){
-      data = Data('','',-1);
+      data = Data('','','',-1);
       isEdit = true;
       _titleController.text = '';
       _descriptionController.text = '';
@@ -46,8 +49,8 @@ class _ContentScreenState extends State<ContentScreen> {
       data = widget.session.allTexts[widget.indexData];
       _titleController.text = data.title;
       _descriptionController.text = data.content;
+      _voiceHandler.setContent(data.textId , data.content);
     }
-    _voiceHandler.setContent(data.title , data.content);
   }
 
   @override
@@ -60,10 +63,36 @@ class _ContentScreenState extends State<ContentScreen> {
   @override
   Widget build(BuildContext context) {
      return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
-            actions: [              
+            actions: [
+              ((_descriptionController.text==''))? 
+              IconButton(
+                icon:  const Icon(Icons.upload_file),
+                onPressed: () async{
+                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  type: FileType.custom,
+                  allowedExtensions: ['txt'],
+                  );   
+                  if (result != null) {
+                    File file = File(result.files.single.path.toString());
+                    final fileContents = file.readAsStringSync();
+                    data.content = fileContents.toString();
+                    _descriptionController.text = fileContents.toString();
+                  }
+                },
+              ):
+              IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: (){
+                  setState(() {
+                    _descriptionController.text = '';
+                    isEdit = true;
+                    data.content = '';
+                  });
+                },
+              ),            
               isEdit ? IconButton(
                 icon: const Icon(Icons.check_circle_outline_outlined),
                 onPressed: () async {
@@ -75,21 +104,22 @@ class _ContentScreenState extends State<ContentScreen> {
                     }
                     else{
                       widget.session.deleteData(data.textId);
-                      final textid = await widget.session.addData(data.title, data.content);
+                      final textid = await widget.session.addData(data.title, data.content, data.date);
                       data.textId = textid;
                       isEdit = false;
                     }
                   }
                   else{
                     if (data.content !='' || data.title!=''){
-                      print ("Hurray");
-                      final int textid = await widget.session.addData(data.title, data.content);
-                      print ("Bye");
+                      final dm = DateTime.now().month.toString()+':'+DateTime.now().day.toString();
+                      final time = DateTime.now().hour.toString()+':'+DateTime.now().minute.toString();
+                      final date = time+' '+dm;
+                      final int textid = await widget.session.addData(data.title,data.content,date);
                       data.textId = textid;
                       isEdit = false;
                     }
                   }
-                  _voiceHandler.setContent(data.title, data.content);
+                  _voiceHandler.setContent(data.textId, data.content);
                   FocusManager.instance.primaryFocus?.unfocus();
                   setState(() {
                   });
@@ -108,33 +138,15 @@ class _ContentScreenState extends State<ContentScreen> {
               ),
             ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: (!isEdit)? AvatarGlow(
-        animate: _isListening,
-        glowColor: Theme.of(context).primaryColor,
-        endRadius: 75.0,
-        duration: const Duration(milliseconds: 1000),
-        repeatPauseDuration: const Duration(milliseconds: 100),
-        repeat: true,
-        child: FloatingActionButton(
-          onPressed: _listen,
-          child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-        ),
-      ): ((_descriptionController.text==''))? FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.upload_file_outlined) ,
-        onPressed: ()async {
-          FilePickerResult? result = await FilePicker.platform.pickFiles(
-            type: FileType.custom,
-            allowedExtensions: ['txt'],
-          );   
-          if (result != null) {
-            File file = File(result.files.single.path.toString());
-            final fileContents = file.readAsStringSync();
-            data.content = fileContents.toString();
-            _descriptionController.text = fileContents.toString();
-          }
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: (!isEdit)? FloatingActionButton(
+        onPressed: (){
+          _listen();
+          setState(() {
+            isOpenBottom = true;
+          });
         },
+        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
       ):null,
 
       body: SingleChildScrollView(
@@ -174,7 +186,7 @@ class _ContentScreenState extends State<ContentScreen> {
                     isEdit = true;
                   });
                 },
-                maxLines: 14,
+                maxLines: 20,
                 controller: _descriptionController,
                 style: const TextStyle(
                     fontWeight: FontWeight.w400,
@@ -201,7 +213,7 @@ class _ContentScreenState extends State<ContentScreen> {
       );
       if (available) {
         setState(() => _isListening = true);
-        _voiceHandler.stop();
+        _voiceHandler.pause();
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
@@ -211,7 +223,7 @@ class _ContentScreenState extends State<ContentScreen> {
     } else {
       setState(() => _isListening = false);
       _speech.stop();
-      _voiceHandler.handleText(_text);
+      answer = _voiceHandler.handleText(_text);
     }
   }
 }

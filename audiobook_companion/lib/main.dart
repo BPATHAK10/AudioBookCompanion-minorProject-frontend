@@ -12,13 +12,10 @@ class MyApp extends StatelessWidget {
       title: 'Kathak',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.light,
-
-        primaryColor: Colors.teal[200],
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const WelcomeScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
