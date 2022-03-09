@@ -24,6 +24,10 @@ class Session{
   late List<Data> allTexts;
 
   Session(){
+    userId = -1;
+    fullName = '';
+    userName = '';
+    passWord = '';
     allTexts = [];
   }
 
@@ -114,7 +118,7 @@ class Session{
 
   Future <bool> addUser(String fullname, String username, String password)async {
     String url = baseUrl+'register';
-    print ("Hello World again");
+    // print ("Hello World again");
     await http.post(Uri.parse(url), body: json.encode({
       'fullname':fullname,
       'username':username,

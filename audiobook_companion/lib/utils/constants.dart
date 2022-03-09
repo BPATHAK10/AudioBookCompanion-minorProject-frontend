@@ -5,7 +5,7 @@ const kPrimaryLightColor = Color(0xFF81EDAD);
 const kButtonColor = Color(0xFFF1E6FF);
 const kTextColor = Color(0xFF000000);
 
-const baseUrl = 'http://192.168.1.66:80/';
+const baseUrl = 'http://10.100.31.236:80/';
 
 //the below presents the constant dialog maps
 
