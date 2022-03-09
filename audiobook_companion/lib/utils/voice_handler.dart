@@ -66,7 +66,7 @@ class VoiceHandler{
     audiobytes = getAudio();
   }
 
-  String handleText(String text){
+  Future<String> handleText(String text) async{
     
     if (text.toLowerCase()=='play'){
         playContent();
@@ -79,16 +79,20 @@ class VoiceHandler{
     }
     else{
       String url = baseUrl+'question_answer';
+      String ans='';
       
-      http.post(Uri.parse(url), body: json.encode({
+      await http.post(Uri.parse(url), body: json.encode({
           'question':text,
           'textId':textId,
           'user_id':userId,
         })
       ).then((response) {
           speak(response.body);
-          return response.body;
-      });
+          ans = response.body;
+          print(ans);
+      }
+      );
+      return ans;
     }
     return '';
   }

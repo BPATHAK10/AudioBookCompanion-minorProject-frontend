@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kathak/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kathak/utils/constants.dart';
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: kPrimaryColor,
-        // primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        // primarySwatch: Colors.red,
       ),
-      home: WelcomeScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }

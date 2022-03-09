@@ -97,10 +97,12 @@ class Session{
 
   Future<bool> setUser(String username, String password) async{
     String url = baseUrl+'login';
+    //print to console
     await http.post(Uri.parse(url), body: json.encode({
       'username':username,
       'password':password
     })).then((response){
+      print(response);
       if (response.body=="404"){
         return false;
       }
