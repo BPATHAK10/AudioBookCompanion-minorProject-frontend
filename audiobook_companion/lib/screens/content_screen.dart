@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:kathak/utils/session_data.dart';
 import 'package:kathak/utils/voice_handler.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ContentScreen extends StatefulWidget {
   final int indexData;
@@ -59,11 +60,11 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   void dispose() {
-    // _text.dispose();
     print ("Popped hurray");
-    // _text.dispose();
-    // answer.dispose();
-    // answer.dispose();
+    _text.removeListener(() { });
+    answer.removeListener(() { });
+    _text.dispose();
+    answer.dispose();
     _voiceHandler.stop();
     _speech.stop();
     _titleController.dispose();
@@ -157,9 +158,9 @@ class _ContentScreenState extends State<ContentScreen> {
       floatingActionButton: (!isEdit && !_isListening)
           ? FloatingActionButton(
             onPressed: () {
-              _showModalBottomSheet();
+              _showModalBottomSheet(context);
             },
-            child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+            child: const Icon(Icons.mic),
           ): null,
       body: SingleChildScrollView(
         reverse: true,
@@ -216,34 +217,33 @@ class _ContentScreenState extends State<ContentScreen> {
 
   void _listen() async {
     if (!_isListening){
-    bool available = await _speech.initialize(
-      onStatus: (val) async{
-        print('onStatus: $val');
-        if (val=='done'){
-          _speech.stop();
-          print (_text.value);
-          final String ans = await _voiceHandler.handleText(_text.value);
-          answer.value = ans;
-          setState(() {
-            print ("Answer ayo");
-            _isListening = false;
-          });
-        }
-      },
-      onError: (val) => print('onError: $val'),
-    );
-    if (available) {
-      setState(() => _isListening = true);
-      _voiceHandler.stop();
-      await _speech.listen(
-        onResult: (val) => 
-          _text.value = val.recognizedWords
+      bool available = await _speech.initialize(
+        onStatus: (val) async{
+          print('onStatus: $val');
+        },
+        onError: (val) => print('onError: $val'),
       );
-    }}
+      if (available) {
+        setState(() => _isListening = true);
+        _voiceHandler.stop();
+        await _speech.listen(
+          onResult: (val) => 
+            _text.value = val.recognizedWords
+        );
+      }}
+    else {
+      _speech.stop();
+      final String ans = await _voiceHandler.handleText(_text.value);
+      answer.value = ans;
+      setState(() {
+        _isListening = false;
+      });
+    }
   }
 
-  void _showModalBottomSheet(){
-    showModalBottomSheet(
+  void _showModalBottomSheet(BuildContext context){
+    _listen();
+    showMaterialModalBottomSheet(
         context: context,
         builder: (BuildContext context) => ValueListenableBuilder(
             valueListenable: _text,
@@ -273,26 +273,17 @@ class _ContentScreenState extends State<ContentScreen> {
                           ),
                         ),
                         const SizedBox(height: 30,),
-                        (_isListening)?IconButton(
+                        FloatingActionButton(
                           onPressed: (){
-                          },
-                          iconSize: 40, 
-                          icon: const AvatarGlow(
-                            endRadius: 80.0,
-                            glowColor: Colors.blue,
-                            repeat: true,
-                            animate: true,
-                            child:Icon(Icons.speaker_phone)
-                          )
-                        )
-                        :IconButton(
-                          onPressed: () async{
-                            // _text.value = '';
-                            // answer.value = '';
                             _listen();
                           },
-                          iconSize: 40, 
-                          icon: const Icon(Icons.replay),
+                          child: (_isListening)?
+                          const AvatarGlow(
+                            endRadius: 80,
+                            animate: true,
+                            child: Icon(Icons.mic)
+                          )
+                          :const Icon(Icons.replay),
                         )
                       ],
                     ),
