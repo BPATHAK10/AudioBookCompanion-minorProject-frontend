@@ -28,8 +28,8 @@ class VoiceHandler{
     userId = _userId;
     try{
       AzureTts.init(
-        subscriptionKey: "81662ce970af461690a18918d4150812", //protect this
-        region: "southeastasia", //protect this.
+        subscriptionKey: "6a9ae950bd8a49d785436405b721627e", //protect this
+        region: "centralindia", //protect this.
         withLogs: true
       );
     }
