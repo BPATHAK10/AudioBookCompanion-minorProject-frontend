@@ -25,12 +25,17 @@ class VoiceHandler{
 
   VoiceHandler(int _userId){
     flutterTts = FlutterTts();
-    userId = _userId;  
-    AzureTts.init(
-      subscriptionKey: "81662ce970af461690a18918d4150812", //protect this
-      region: "southeastasia", //protect this.
-      withLogs: true
-    );
+    userId = _userId;
+    try{
+      AzureTts.init(
+        subscriptionKey: "81662ce970af461690a18918d4150812", //protect this
+        region: "southeastasia", //protect this.
+        withLogs: true
+      );
+    }
+    catch(identifier){
+      print ("Yeah here is a error");
+    }
     voice = setVoice();
   }
 
@@ -66,8 +71,8 @@ class VoiceHandler{
     audiobytes = getAudio();
   }
 
-  Future<String> handleText(String text) async{
-    
+  Future<String> handleText(String text) async {
+    print (text);
     if (text.toLowerCase()=='play'){
         playContent();
     }
@@ -79,7 +84,7 @@ class VoiceHandler{
     }
     else{
       String url = baseUrl+'question_answer';
-      String ans='';
+      late String ans='';
       
       await http.post(Uri.parse(url), body: json.encode({
           'question':text,
@@ -89,9 +94,9 @@ class VoiceHandler{
       ).then((response) {
           speak(response.body);
           ans = response.body;
-          print(ans);
       }
       );
+      print (ans);
       return ans;
     }
     return '';

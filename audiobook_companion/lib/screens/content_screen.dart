@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:kathak/utils/constants.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:file_picker/file_picker.dart';
 import 'package:kathak/utils/session_data.dart';
 import 'package:kathak/utils/voice_handler.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 
 class ContentScreen extends StatefulWidget {
@@ -26,20 +24,13 @@ class _ContentScreenState extends State<ContentScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   late VoiceHandler _voiceHandler;
-  // late PersistentBottomSheetController _controller;
 
   late String contentOfFile;
   final stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
 
-  // final ValueNotifier<Map> questionAnswer = ValueNotifier({
-  //   'question': 'this is question',
-  //   'answer': 'this is answer',
-  // });
-
   final ValueNotifier<String> _text = ValueNotifier<String>('start speaking');
   final ValueNotifier<String> answer = ValueNotifier<String>('');
-  // String answer = '';
 
   final _scaffoldKey = GlobalKey<ScaffoldState>(); //key for context
   @override
@@ -60,13 +51,24 @@ class _ContentScreenState extends State<ContentScreen> {
   }
 
   @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void dispose() {
-    _text.dispose();
-    answer.dispose();
-    super.dispose();
+    // _text.dispose();
+    print ("Popped hurray");
+    // _text.dispose();
+    // answer.dispose();
+    // answer.dispose();
     _voiceHandler.stop();
     _speech.stop();
-
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -213,15 +215,17 @@ class _ContentScreenState extends State<ContentScreen> {
   }
 
   void _listen() async {
+    if (!_isListening){
     bool available = await _speech.initialize(
       onStatus: (val) async{
         print('onStatus: $val');
         if (val=='done'){
-          print ("Hello done listening");
           _speech.stop();
-          var ans = await _voiceHandler.handleText(_text.value);
+          print (_text.value);
+          final String ans = await _voiceHandler.handleText(_text.value);
+          answer.value = ans;
           setState(() {
-            answer.value = ans;
+            print ("Answer ayo");
             _isListening = false;
           });
         }
@@ -230,25 +234,20 @@ class _ContentScreenState extends State<ContentScreen> {
     );
     if (available) {
       setState(() => _isListening = true);
-      _voiceHandler.pause();
+      _voiceHandler.stop();
       await _speech.listen(
-        onResult: (val) => setState(() {
-          _text.value = val.recognizedWords;
-        }),
+        onResult: (val) => 
+          _text.value = val.recognizedWords
       );
-    }
+    }}
   }
 
   void _showModalBottomSheet(){
-    showMaterialModalBottomSheet(
-        duration: const Duration(milliseconds: 400),
+    showModalBottomSheet(
         context: context,
         builder: (BuildContext context) => ValueListenableBuilder(
             valueListenable: _text,
             builder: (context, value, child) {
-              if (!_isListening){
-                _listen();
-              }
               return ValueListenableBuilder(
                 valueListenable: answer,
                 builder: (BuildContext context, dynamic value, Widget? child){
@@ -287,9 +286,9 @@ class _ContentScreenState extends State<ContentScreen> {
                           )
                         )
                         :IconButton(
-                          onPressed: (){
-                            _text.value = '';
-                            answer.value = '';
+                          onPressed: () async{
+                            // _text.value = '';
+                            // answer.value = '';
                             _listen();
                           },
                           iconSize: 40, 
