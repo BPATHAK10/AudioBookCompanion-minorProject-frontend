@@ -1,11 +1,5 @@
 # KATHAK frontend
 
-## Introduction
-**Kathak** is a mobile application which encompases both Machine Reading
-Comprehension and Speech Processing functionalities to give users the best experience
-for interaction with the system. Through this application, users can write or upload
-paragraphs of stories or texts, feed it to the system and ask queries from within the text.
-The language model then understands its semantics and finds appropriate solution.
 
 ## Implementation
 ### Framework used
